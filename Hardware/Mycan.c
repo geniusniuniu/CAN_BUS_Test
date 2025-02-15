@@ -1,7 +1,7 @@
 #include "Mycan.h"
 #include "string.h"
 
-void MyCanInit(void)
+void MyCanInit(uint8_t CanOperatingMode)
 {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1,ENABLE);
@@ -18,7 +18,13 @@ void MyCanInit(void)
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	CAN_InitTypeDef CAN_InitStructure;
-	CAN_InitStructure.CAN_Mode = CAN_Mode_LoopBack;	//环回模式
+	if(CanOperatingMode == CAN_LOOPBACK)
+		CAN_InitStructure.CAN_Mode = CAN_Mode_LoopBack;	//环回模式
+	else if(CanOperatingMode == CAN_NORMAL)
+		CAN_InitStructure.CAN_Mode = CAN_Mode_Normal;	//正常工作模式
+	else if (CanOperatingMode == CAN_SILENT)
+		CAN_InitStructure.CAN_Mode = CAN_Mode_Silent;	//静默模式	
+	
 	CAN_InitStructure.CAN_Prescaler = 6;		//高速CANBUS BaudRate=36M/12/(1+CAN_BS1_2tq+CAN_BS2_3tq)=500Khz	
 	CAN_InitStructure.CAN_BS1 = CAN_BS1_2tq;	//位时间段1长度 
 	CAN_InitStructure.CAN_BS2 = CAN_BS2_3tq;	//位时间段2长度

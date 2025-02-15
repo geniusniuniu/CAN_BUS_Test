@@ -17,7 +17,7 @@ int main(void)
 {
 	OLED_Init();
 	Key_Init();
-	MyCanInit();
+	MyCanInit(CAN_NORMAL);
 	
 	OLED_ShowString(1, 1, "TxID:");
 	OLED_ShowHexNum(1, 6, TxID, 3);
