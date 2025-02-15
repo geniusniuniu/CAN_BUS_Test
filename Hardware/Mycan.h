@@ -3,6 +3,8 @@
 
 #include "stm32f10x.h"                  // Device header  
 
+#define EMPTY 		0
+#define NOT_EMPTY 	1
 void MyCanInit(void);
 void myCanTransmit(uint32_t canPeriphTxID,uint8_t dataLenth,uint8_t * data);
 uint8_t myCanReceiveIsEmpty(void);
